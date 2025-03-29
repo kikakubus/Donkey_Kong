@@ -1,4 +1,4 @@
-package org.example.entities.enemies;
+package org.example.entities.obstakels.aap;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.entities.impl.SpriteEntity;
