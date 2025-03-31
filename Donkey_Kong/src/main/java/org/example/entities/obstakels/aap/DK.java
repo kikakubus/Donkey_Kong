@@ -1,13 +1,21 @@
 package org.example.entities.obstakels.aap;
 
 import com.github.hanyaeger.api.Coordinate2D;
-import com.github.hanyaeger.api.entities.impl.SpriteEntity;
+import com.github.hanyaeger.api.entities.DynamicCompositeEntity;
 
-public class DK extends SpriteEntity {
+public class DK extends DynamicCompositeEntity {
 
-    protected DK(String resource, Coordinate2D initialLocation) {
-        super(resource, initialLocation);
+    public DK(Coordinate2D initialLocation) {
+        super(initialLocation);
+        setMotion(0, 0);
     }
 
+    @Override
+    public void setupEntities() {
+        var dkSprite = new DKSprite(
+                new Coordinate2D(0, 0)
+        );
 
+        addEntity(dkSprite);
+    }
 }

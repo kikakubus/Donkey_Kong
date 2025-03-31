@@ -4,7 +4,7 @@ import com.github.hanyaeger.api.scenes.StaticScene;
 import org.example.DonkeyKong;
 
 public class TitelScherm extends StaticScene {
-   private DonkeyKong donkeyKong = new DonkeyKong();
+   private DonkeyKong donkeyKong;
 
     public TitelScherm(DonkeyKong donkeyKong) {
         this.donkeyKong = donkeyKong;
