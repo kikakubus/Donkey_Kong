@@ -8,6 +8,5 @@ public abstract class Ladders extends SpriteEntity {
 
     public Ladders(Coordinate2D initialLocation, Size size, String resource) {
         super(resource, initialLocation, size);
-
     }
 }
