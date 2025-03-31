@@ -3,6 +3,7 @@ package org.example;
 import com.github.hanyaeger.api.YaegerGame;
 import org.example.scenes.GameScherm;
 import com.github.hanyaeger.api.Size;
+import org.example.scenes.TitelScherm;
 
 public class DonkeyKong extends YaegerGame
 {
@@ -18,8 +19,8 @@ public class DonkeyKong extends YaegerGame
 
     @Override
     public void setupScenes() {
-//        addScene(0, new TitelScherm(this));
-        addScene(0, new GameScherm(this));
+        addScene(0, new TitelScherm(this));
+        addScene(1, new GameScherm(this));
         //addScene(2, new EindScherm());
         //addScene(3, new ScoreLijst());
     }

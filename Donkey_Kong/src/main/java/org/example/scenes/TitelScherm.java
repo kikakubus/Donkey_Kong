@@ -1,10 +1,13 @@
 package org.example.scenes;
 
+import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.scenes.StaticScene;
 import org.example.DonkeyKong;
+import org.example.buttons.Knop;
+import org.example.buttons.StartKnop;
 
 public class TitelScherm extends StaticScene {
-   private DonkeyKong donkeyKong;
+    private DonkeyKong donkeyKong = new DonkeyKong();
 
     public TitelScherm(DonkeyKong donkeyKong) {
         this.donkeyKong = donkeyKong;
@@ -19,6 +22,7 @@ public class TitelScherm extends StaticScene {
 
     @Override
     public void setupEntities() {
-
+        Knop startKnop = new StartKnop(new Coordinate2D(getWidth() / 2, 300), donkeyKong);
+        addEntity(startKnop);
     }
 }
