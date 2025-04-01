@@ -11,6 +11,7 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
 import org.example.entities.level.Balken;
+import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.level.ladders.Ladders;
 import org.example.entities.obstakels.tonnen.Tonnen;
 
@@ -20,75 +21,97 @@ import java.util.Set;
 public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collided, Newtonian, SceneBorderTouchingWatcher {
     private double playerSpeed = 1;
     private boolean onGround = false;
-    private double jumpStrength = 3.8;
-    private double horizontalMotion = 0; // Store horizontal speed
+    private double jumpStrength = 4;
+    private double horizontalMotion = 0;
     private int interval = 200;
     private boolean canClimb = false;
+    private boolean climbing = false;
 
     public SuperMax(Coordinate2D initialLocation) {
         super("sprites/SuperMax.png", initialLocation, new Size(100, 50), 3, 2);
-
-        setGravityConstant(0.10); // Set gravity for a natural fall
-        //setFrictionConstant(0.02); // Slight friction for air movement
+        setGravityConstant(0.10);
     }
 
     @Override
     public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
         boolean movingHorizontally = false;
+        boolean movingVertically = false;
+        climbing = false;
 
-        // Horizontal movement when on the ground
-        if (pressedKeys.contains(KeyCode.LEFT)) {
-            movingHorizontally = true;
-            horizontalMotion = -playerSpeed;
-
-            if (onGround) {
-                setMotion(playerSpeed, 270d);  // Move left on the ground
-                setAutoCycle(interval, 1);
-            }
-        } else if (pressedKeys.contains(KeyCode.RIGHT)) {
-            movingHorizontally = true;
-            horizontalMotion = playerSpeed;
-
-            if (onGround) {
-                setMotion(playerSpeed, 90d);  // Move right on the ground
-                setAutoCycle(interval, 0);
+        if (canClimb) {
+            if (pressedKeys.contains(KeyCode.DOWN)) {
+                climbing = true;
+                movingVertically = true;
+                setMotion(playerSpeed, 360d);
+            } else if (pressedKeys.contains(KeyCode.UP)) {
+                climbing = true;
+                movingVertically = true;
+                setMotion(playerSpeed, 180d);
             }
         }
 
-        // Jumping logic
+        if (!climbing) {
+            if (pressedKeys.contains(KeyCode.LEFT)) {
+                movingHorizontally = true;
+                horizontalMotion = -playerSpeed;
+                if (onGround) {
+                    setMotion(playerSpeed, 270d);
+                    setAutoCycle(interval, 1);
+                }
+            } else if (pressedKeys.contains(KeyCode.RIGHT)) {
+                movingHorizontally = true;
+                horizontalMotion = playerSpeed;
+                if (onGround) {
+                    setMotion(playerSpeed, 90d);
+                    setAutoCycle(interval, 0);
+                }
+            }
+        }
+
         if (pressedKeys.contains(KeyCode.SPACE) && onGround) {
             if (movingHorizontally) {
-                setMotion(jumpStrength, horizontalMotion > 0 ? 160d : 200d); // Jump and maintain horizontal motion
+                setMotion(jumpStrength, horizontalMotion > 0 ? 160d : 200d);
             } else {
-                setMotion(jumpStrength, 180d); // Jump upwards if not moving horizontally
+                setMotion(jumpStrength, 180d);
             }
-            onGround = false; // Player is in the air now
+            onGround = false;
         }
 
-        // Stop horizontal movement when not moving left or right
-        if (!movingHorizontally && onGround) {
+        if (!movingHorizontally && !movingVertically && onGround && !climbing) {
             setSpeed(0);
         }
+
+        canClimb = false;
     }
 
     @Override
     public void onCollision(List<Collider> colliders) {
         canClimb = false;
+        boolean touchingLadder = false;
+        boolean touchingGround = false;
 
         for (Collider collider : colliders) {
             if (collider instanceof Balken) {
-                onGround = true;  // Player has landed
+                touchingGround = true;
                 alignWithPlatform((Balken) collider);
             }
-
-            if (collider instanceof Ladders) {
+            if (collider instanceof InteractieveLadders) {
                 canClimb = true;
+                touchingLadder = true;
             }
         }
+
+        if (!touchingLadder) {
+            climbing = false;
+        }
+
+        onGround = touchingGround;
     }
 
     private void alignWithPlatform(Balken balken) {
-        setAnchorLocationY(balken.getBoundingBox().getMinY() - getHeight()); // Align with the platform
+        if (!climbing) {
+            setAnchorLocationY(balken.getBoundingBox().getMinY() - getHeight());
+        }
     }
 
     @Override
@@ -101,7 +124,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                 break;
             case BOTTOM:
                 setAnchorLocationY(getSceneHeight() - getHeight() - playerSpeed);
-                onGround = true;  // Player is on the ground
+                onGround = true;
                 break;
             case LEFT:
                 setAnchorLocationX(1);
