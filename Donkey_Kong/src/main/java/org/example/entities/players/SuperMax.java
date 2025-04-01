@@ -16,16 +16,17 @@ import java.util.List;
 import java.util.Set;
 
 public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collided, Newtonian, SceneBorderTouchingWatcher {
-    private int playerSpeed = 2;
+    private int playerSpeed = 1;
     private boolean onGround = false;
-    private double jumpStrength = 6;
+    private double jumpStrength = 5;
     private double horizontalMotion = 0; // Store horizontal speed
+    private int interval = 200;
 
     public SuperMax(Coordinate2D initialLocation) {
         super("sprites/SuperMax.png", initialLocation, new Size(100, 50), 3, 2);
 
-        setGravityConstant(0.3); // Set gravity for a natural fall
-        setFrictionConstant(0.02); // Slight friction for air movement
+        setGravityConstant(0.25); // Set gravity for a natural fall
+        //setFrictionConstant(0.02); // Slight friction for air movement
     }
 
     @Override
@@ -36,23 +37,25 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         if (pressedKeys.contains(KeyCode.LEFT)) {
             movingHorizontally = true;
             horizontalMotion = -playerSpeed;
+
             if (onGround) {
                 setMotion(playerSpeed, 270d);  // Move left on the ground
-                setCurrentFrameIndex(2);
+                setAutoCycle(interval, 1);
             }
         } else if (pressedKeys.contains(KeyCode.RIGHT)) {
             movingHorizontally = true;
             horizontalMotion = playerSpeed;
+
             if (onGround) {
                 setMotion(playerSpeed, 90d);  // Move right on the ground
-                setCurrentFrameIndex(6);
+                setAutoCycle(interval, 0);
             }
         }
 
         // Jumping logic
         if (pressedKeys.contains(KeyCode.UP) && onGround) {
             if (movingHorizontally) {
-                setMotion(jumpStrength, horizontalMotion > 0 ? 150d : 210d); // Jump and maintain horizontal motion
+                setMotion(jumpStrength, horizontalMotion > 0 ? 160d : 200d); // Jump and maintain horizontal motion
             } else {
                 setMotion(jumpStrength, 180d); // Jump upwards if not moving horizontally
             }
