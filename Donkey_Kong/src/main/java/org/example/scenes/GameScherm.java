@@ -14,12 +14,12 @@ public class GameScherm extends DynamicScene implements TileMapContainer {
     private DonkeyKong donkeyKong;
 
     public GameScherm(DonkeyKong donkeyKong) {
-        //setBackgroundAudio("Sound/Stage_1.mp3");
         this.donkeyKong = donkeyKong;
     }
 
     @Override
     public void setupScene() {
+        setBackgroundAudio("Sound/Stage_1.mp3");
         setBackgroundColor(Color.BLACK);
     }
 
