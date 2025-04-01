@@ -4,9 +4,9 @@ import com.github.hanyaeger.api.Coordinate2D;
 
 public class BruineTonnen extends Tonnen {
 
-    public BruineTonnen(Coordinate2D initialLocation) {
-        super(initialLocation);
-        setMotion(1, 90d);
+    public BruineTonnen(Coordinate2D initialLocation, int speed) {
+        super(initialLocation, speed);
+        setMotion(speed, 270d);
     }
 
     @Override

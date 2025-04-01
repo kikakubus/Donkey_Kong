@@ -1,17 +1,22 @@
 package org.example.scenes;
 
 import com.github.hanyaeger.api.Coordinate2D;
+import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.scenes.DynamicScene;
 import com.github.hanyaeger.api.scenes.TileMapContainer;
 import javafx.scene.paint.Color;
 import org.example.DonkeyKong;
+import org.example.Hitbox;
 import org.example.entities.obstakels.aap.DK;
-import org.example.entities.obstakels.tonnen.BruineTonnen;
 import org.example.entities.players.SuperMax;
+import org.example.entities.spawners.TonnenSpawner;
 import org.example.maps.Maps;
 
-public class GameScherm extends DynamicScene implements TileMapContainer {
+import java.util.ArrayList;
+
+public class GameScherm extends DynamicScene implements TileMapContainer, EntitySpawnerContainer {
     private DonkeyKong donkeyKong;
+    private ArrayList<Hitbox> hitboxes = new ArrayList<>();
 
     public GameScherm(DonkeyKong donkeyKong) {
         this.donkeyKong = donkeyKong;
@@ -33,13 +38,17 @@ public class GameScherm extends DynamicScene implements TileMapContainer {
                 new Coordinate2D(getWidth() / 1.3 , getHeight() / 1.5)
         );
 
-        var bruineTonnen = new BruineTonnen(
-                new Coordinate2D(getWidth() / 1.5 , getHeight() / 1.6)
-        );
-
         addEntity(aap);
         addEntity(superMax);
-        addEntity(bruineTonnen);
+
+        hitboxes.add(new Hitbox(new Coordinate2D(120,140)));
+        hitboxes.add(new Hitbox(new Coordinate2D(150, 316)));
+        hitboxes.add(new Hitbox(new Coordinate2D(365, 295)));
+        hitboxes.add(new Hitbox(new Coordinate2D(338, 473)));
+
+        for (Hitbox hitbox : hitboxes) {
+            addEntity(hitbox);
+        }
     }
 
     @Override
@@ -47,5 +56,10 @@ public class GameScherm extends DynamicScene implements TileMapContainer {
         var gameMap = new Maps();
 
         addTileMap(gameMap);
+    }
+
+    @Override
+    public void setupEntitySpawners() {
+        addEntitySpawner(new TonnenSpawner(getWidth(), getHeight()));
     }
 }
