@@ -30,7 +30,7 @@ public abstract class Tonnen extends DynamicCompositeEntity implements Collided,
                 Random random = new Random();
                 if (random.nextInt(2) == 0) {
                     movingDown = true;
-                    setMotion(2, 360d);
+                    setMotion(1, 360d);
                 }
             }
         }

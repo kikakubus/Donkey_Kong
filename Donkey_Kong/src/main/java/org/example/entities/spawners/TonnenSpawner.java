@@ -20,7 +20,7 @@ public class TonnenSpawner extends EntitySpawner {
     @Override
     public void spawnEntities() {
         if (new Random().nextInt(5) < 4) {
-            spawn(new BruineTonnen(new Coordinate2D(300, 130), 2));
+            spawn(new BruineTonnen(new Coordinate2D(300, 130), 1));
         }
     }
 }

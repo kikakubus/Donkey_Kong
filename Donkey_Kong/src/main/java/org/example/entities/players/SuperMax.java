@@ -11,21 +11,24 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
 import org.example.entities.level.Balken;
+import org.example.entities.level.ladders.Ladders;
+import org.example.entities.obstakels.tonnen.Tonnen;
 
 import java.util.List;
 import java.util.Set;
 
 public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collided, Newtonian, SceneBorderTouchingWatcher {
-    private int playerSpeed = 1;
+    private double playerSpeed = 1;
     private boolean onGround = false;
-    private double jumpStrength = 5;
+    private double jumpStrength = 3.8;
     private double horizontalMotion = 0; // Store horizontal speed
     private int interval = 200;
+    private boolean canClimb = false;
 
     public SuperMax(Coordinate2D initialLocation) {
         super("sprites/SuperMax.png", initialLocation, new Size(100, 50), 3, 2);
 
-        setGravityConstant(0.25); // Set gravity for a natural fall
+        setGravityConstant(0.10); // Set gravity for a natural fall
         //setFrictionConstant(0.02); // Slight friction for air movement
     }
 
@@ -53,7 +56,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         }
 
         // Jumping logic
-        if (pressedKeys.contains(KeyCode.UP) && onGround) {
+        if (pressedKeys.contains(KeyCode.SPACE) && onGround) {
             if (movingHorizontally) {
                 setMotion(jumpStrength, horizontalMotion > 0 ? 160d : 200d); // Jump and maintain horizontal motion
             } else {
@@ -70,11 +73,16 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
 
     @Override
     public void onCollision(List<Collider> colliders) {
+        canClimb = false;
+
         for (Collider collider : colliders) {
             if (collider instanceof Balken) {
                 onGround = true;  // Player has landed
-                setSpeed(0); // Stop downward movement when landing
                 alignWithPlatform((Balken) collider);
+            }
+
+            if (collider instanceof Ladders) {
+                canClimb = true;
             }
         }
     }
