@@ -8,19 +8,21 @@ import org.example.entities.obstakels.tonnen.BruineTonnen;
 import java.util.Random;
 
 public class TonnenSpawner extends EntitySpawner {
-    private final double sceneWidth;
-    private final double sceneHeight;
+    private double sceneWidth = 1.5;
+    private final double SCENE_HEIGHT;
 
-    public TonnenSpawner(double SceneWidth, double SceneHeight) {
-        super(1800);
-        this.sceneWidth = SceneWidth;
-        this.sceneHeight = SceneHeight;
+    public TonnenSpawner(double sceneWidth, double SCENE_HEIGHT) {
+        super(3000);
+        this.sceneWidth = sceneWidth;
+        this.SCENE_HEIGHT = SCENE_HEIGHT;
     }
 
     @Override
     public void spawnEntities() {
-        if (new Random().nextInt(5) < 4) {
-            spawn(new BruineTonnen(new Coordinate2D(300, 130), 1));
+        spawn(new BruineTonnen(new Coordinate2D(300, 130), 1));
+
+        if (new Random().nextInt(9) < 4) {
+            spawn(new BlauweTonnen(new Coordinate2D(340, 130), 1));
         }
     }
 }
