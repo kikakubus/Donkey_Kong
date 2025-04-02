@@ -1,9 +1,10 @@
 package org.example.entities.obstakels.aap;
 
 import com.github.hanyaeger.api.Coordinate2D;
+import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.DynamicCompositeEntity;
 
-public class DK extends DynamicCompositeEntity {
+public class DK extends DynamicCompositeEntity implements Collider {
 
     public DK(Coordinate2D initialLocation) {
         super(initialLocation);

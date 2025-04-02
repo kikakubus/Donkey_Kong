@@ -13,7 +13,7 @@ public class BlauweTonnen extends Tonnen {
     @Override
     public void setupEntities() {
         var blauweTonnenSprite = new BlauweTonnenSprite(
-                new Coordinate2D(0,0)
+                new Coordinate2D(0, 0)
         );
 
         addEntity(blauweTonnenSprite);

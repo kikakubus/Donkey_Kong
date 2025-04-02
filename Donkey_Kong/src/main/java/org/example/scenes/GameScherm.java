@@ -11,6 +11,7 @@ import org.example.RectangleHitbox;
 import org.example.entities.obstakels.aap.DK;
 import org.example.entities.players.SuperMax;
 import org.example.entities.spawners.TonnenSpawner;
+import org.example.entities.tekst.HealthText;
 import org.example.maps.Maps;
 
 import java.util.ArrayList;
@@ -31,14 +32,20 @@ public class GameScherm extends DynamicScene implements TileMapContainer, Entity
 
     @Override
     public void setupEntities() {
+        var healthText = new HealthText(
+                new Coordinate2D(getWidth() / 9 , getHeight() / 9)
+        );
+
         var aap = new DK(
                 new Coordinate2D(getWidth() / 1.5 , getHeight() / 8.8)
         );
 
         var superMax = new SuperMax(
-                new Coordinate2D(getWidth() / 1.3 , getHeight() / 1.5)
+                new Coordinate2D(getWidth() / 1.3 , getHeight() / 1.5),
+                healthText
         );
 
+        addEntity(healthText);
         addEntity(aap);
         addEntity(superMax);
 

@@ -13,9 +13,14 @@ import javafx.scene.input.KeyCode;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.level.ladders.Ladders;
+import org.example.entities.obstakels.aap.DK;
+import org.example.entities.obstakels.tonnen.BlauweTonnen;
+import org.example.entities.obstakels.tonnen.BruineTonnen;
 import org.example.entities.obstakels.tonnen.Tonnen;
+import org.example.entities.tekst.HealthText;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collided, Newtonian, SceneBorderTouchingWatcher {
@@ -24,11 +29,16 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     private double jumpStrength = 4;
     private double horizontalMotion = 0;
     private int interval = 200;
+    private int health = 3;
     private boolean canClimb = false;
     private boolean climbing = false;
+    private HealthText healthText;
 
-    public SuperMax(Coordinate2D initialLocation) {
+    public SuperMax(Coordinate2D initialLocation, HealthText healthText) {
         super("sprites/SuperMax.png", initialLocation, new Size(100, 50), 3, 2);
+        this.healthText = healthText;
+
+        healthText.setHealthText(health);
         setGravityConstant(0.10);
     }
 
@@ -99,6 +109,15 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                 canClimb = true;
                 touchingLadder = true;
             }
+
+            if (collider instanceof BruineTonnen || collider instanceof BlauweTonnen || collider instanceof DK) {
+                health--;
+                healthText.setHealthText(health);
+
+                setAnchorLocation(
+                        new Coordinate2D(25, 400)
+                );
+            }
         }
 
         if (!touchingLadder) {
@@ -106,6 +125,15 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         }
 
         onGround = touchingGround;
+
+//        for (Collider collider : list) {
+//            if (collider instanceof AirBubble) {
+//                bubblesScore++;
+//                bubbleText.setBubbleText(bubblesScore);
+//            } else if (collider instanceof Coral) {
+//                setSpeed(0);
+//            }
+//        }
     }
 
     private void alignWithPlatform(Balken balken) {
