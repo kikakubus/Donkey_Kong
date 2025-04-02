@@ -10,6 +10,7 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
+import org.example.Hitbox.CircleHitbox;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.level.ladders.Ladders;
@@ -18,6 +19,7 @@ import org.example.entities.obstakels.tonnen.BlauweTonnen;
 import org.example.entities.obstakels.tonnen.BruineTonnen;
 import org.example.entities.obstakels.tonnen.Tonnen;
 import org.example.entities.tekst.HealthText;
+import org.example.entities.tekst.ScoreText;
 
 import java.util.List;
 import java.util.Random;
@@ -30,15 +32,19 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     private double horizontalMotion = 0;
     private int interval = 200;
     private int health = 3;
+    private int score = 0;
     private boolean canClimb = false;
     private boolean climbing = false;
     private HealthText healthText;
+    private ScoreText scoreText;
 
-    public SuperMax(Coordinate2D initialLocation, HealthText healthText) {
+    public SuperMax(Coordinate2D initialLocation, HealthText healthText, ScoreText scoreText) {
         super("sprites/SuperMax.png", initialLocation, new Size(100, 50), 3, 2);
         this.healthText = healthText;
+        this.scoreText = scoreText;
 
         healthText.setHealthText(health);
+        scoreText.setScoreText(score);
         setGravityConstant(0.10);
     }
 
@@ -118,6 +124,11 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                         new Coordinate2D(25, 400)
                 );
             }
+
+            if (collider instanceof CircleHitbox) {
+                score = score + 100;
+                scoreText.setScoreText(score);
+            }
         }
 
         if (!touchingLadder) {
@@ -125,15 +136,6 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         }
 
         onGround = touchingGround;
-
-//        for (Collider collider : list) {
-//            if (collider instanceof AirBubble) {
-//                bubblesScore++;
-//                bubbleText.setBubbleText(bubblesScore);
-//            } else if (collider instanceof Coral) {
-//                setSpeed(0);
-//            }
-//        }
     }
 
     private void alignWithPlatform(Balken balken) {

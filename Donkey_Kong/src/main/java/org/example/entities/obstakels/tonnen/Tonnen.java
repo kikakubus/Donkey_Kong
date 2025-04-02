@@ -5,7 +5,7 @@ import com.github.hanyaeger.api.entities.Collided;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.DynamicCompositeEntity;
 import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
-import org.example.RectangleHitbox;
+import org.example.Hitbox.RectangleHitbox;
 import java.util.List;
 
 public abstract class Tonnen extends DynamicCompositeEntity implements Collided, Collider, SceneBorderCrossingWatcher {

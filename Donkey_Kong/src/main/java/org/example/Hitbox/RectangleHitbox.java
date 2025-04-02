@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Hitbox;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import javafx.scene.paint.Color;

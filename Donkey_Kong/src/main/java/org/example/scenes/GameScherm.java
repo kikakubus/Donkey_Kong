@@ -6,12 +6,13 @@ import com.github.hanyaeger.api.scenes.DynamicScene;
 import com.github.hanyaeger.api.scenes.TileMapContainer;
 import javafx.scene.paint.Color;
 import org.example.DonkeyKong;
-import org.example.Hitbox;
-import org.example.RectangleHitbox;
+import org.example.Hitbox.Hitbox;
+import org.example.Hitbox.RectangleHitbox;
 import org.example.entities.obstakels.aap.DK;
 import org.example.entities.players.SuperMax;
 import org.example.entities.spawners.TonnenSpawner;
 import org.example.entities.tekst.HealthText;
+import org.example.entities.tekst.ScoreText;
 import org.example.maps.Maps;
 
 import java.util.ArrayList;
@@ -36,16 +37,21 @@ public class GameScherm extends DynamicScene implements TileMapContainer, Entity
                 new Coordinate2D(getWidth() / 9 , getHeight() / 9)
         );
 
+        var scoreText = new ScoreText(
+                new Coordinate2D(getWidth() / 3, getHeight() / 9)
+        );
+
         var aap = new DK(
                 new Coordinate2D(getWidth() / 1.5 , getHeight() / 8.8)
         );
 
         var superMax = new SuperMax(
                 new Coordinate2D(getWidth() / 1.3 , getHeight() / 1.5),
-                healthText
+                healthText, scoreText
         );
 
         addEntity(healthText);
+        addEntity(scoreText);
         addEntity(aap);
         addEntity(superMax);
 

@@ -11,4 +11,5 @@ module Donkey.Kong {
     opens Backgrounds;
     opens Sound;
     opens sprites;
+    exports org.example.Hitbox;
 }
