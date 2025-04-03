@@ -4,6 +4,7 @@ import com.github.hanyaeger.api.scenes.TileMap;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.level.ladders.NietInteractieveLadders;
+import org.example.entities.obstakels.vlammetjes.RodeVlammetjes;
 import org.example.entities.powerups.Hamers;
 
 public class Maps extends TileMap {
@@ -14,7 +15,6 @@ public class Maps extends TileMap {
         addEntity(2, Hamers.class, "sprites/hammer.png");
         addEntity(3, InteractieveLadders.class, "sprites/IntactLadder.png");
         addEntity(4, NietInteractieveLadders.class, "sprites/BrokenLadder.png");
-
     }
 
     @Override

@@ -16,6 +16,7 @@ import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.obstakels.aap.DK;
 import org.example.entities.obstakels.tonnen.Tonnen;
+import org.example.entities.obstakels.vlammetjes.Vlammetjes;
 import org.example.entities.powerups.Hamers;
 import org.example.entities.tekst.HealthText;
 import org.example.entities.tekst.ScoreText;
@@ -24,11 +25,8 @@ import org.example.scenes.GameScherm;
 
 import java.util.List;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collided, Newtonian, SceneBorderTouchingWatcher {
-    static Timer timer = new Timer();
     private DonkeyKong donkeyKong;
     private GameScherm gameScherm;
     private double playerSpeed = 1;
@@ -154,6 +152,22 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                     Globals.SCORE = score;
                     scoreText.setScoreText(score);
                     ((Tonnen) collider).remove();
+                } else {
+                    health--;
+                    healthText.setHealthText(health);
+
+                    setAnchorLocation(
+                            new Coordinate2D(25, 450)
+                    );
+                }
+            }
+
+            if (collider instanceof Vlammetjes) {
+                if (Globals.hammerState) {
+                    score = score + 500;
+                    Globals.SCORE = score;
+                    scoreText.setScoreText(score);
+                    ((Vlammetjes) collider).remove();
                 } else {
                     health--;
                     healthText.setHealthText(health);
