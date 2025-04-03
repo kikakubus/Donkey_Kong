@@ -5,7 +5,7 @@ import com.github.hanyaeger.api.entities.Collided;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.DynamicCompositeEntity;
 import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
-import org.example.Hitbox.RectangleHitbox;
+import org.example.Hitbox.BrokenLadderHitbox;
 import java.util.List;
 
 public abstract class Tonnen extends DynamicCompositeEntity implements Collided, Collider, SceneBorderCrossingWatcher {
@@ -24,7 +24,7 @@ public abstract class Tonnen extends DynamicCompositeEntity implements Collided,
         // Checks which Hitbox the barrels collide with
         // The switch searches a ID that has been assigned to the hitbox
         for (Collider colliderObject : collidingObjects) {
-            if (colliderObject instanceof RectangleHitbox rectangleHitbox) {
+            if (colliderObject instanceof BrokenLadderHitbox rectangleHitbox) {
                 switch (rectangleHitbox.getId()) {
                     case "TopFloor-LeftSide", "FirstFloor-RightSide":
                         setMotion(0.7, 360d);
