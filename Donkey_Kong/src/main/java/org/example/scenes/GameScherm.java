@@ -34,11 +34,11 @@ public class GameScherm extends DynamicScene implements TileMapContainer, Entity
     @Override
     public void setupEntities() {
         var healthText = new HealthText(
-                new Coordinate2D(getWidth() / 9 , getHeight() / 9)
+                new Coordinate2D(getWidth() / 4 , 10)
         );
 
         var scoreText = new ScoreText(
-                new Coordinate2D(getWidth() / 3, getHeight() / 9)
+                new Coordinate2D(getWidth() / 2, 10)
         );
 
         var aap = new DK(
@@ -46,8 +46,10 @@ public class GameScherm extends DynamicScene implements TileMapContainer, Entity
         );
 
         var superMax = new SuperMax(
-                new Coordinate2D(getWidth() / 1.3 , getHeight() / 1.5),
-                healthText, scoreText
+                new Coordinate2D(25, 450),
+                healthText, scoreText,
+                donkeyKong,
+                this
         );
 
         addEntity(healthText);

@@ -10,22 +10,27 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
+import org.example.DonkeyKong;
 import org.example.Hitbox.CircleHitbox;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
-import org.example.entities.level.ladders.Ladders;
 import org.example.entities.obstakels.aap.DK;
-import org.example.entities.obstakels.tonnen.BlauweTonnen;
-import org.example.entities.obstakels.tonnen.BruineTonnen;
 import org.example.entities.obstakels.tonnen.Tonnen;
+import org.example.entities.powerups.Hamers;
 import org.example.entities.tekst.HealthText;
 import org.example.entities.tekst.ScoreText;
+import org.example.globals.Globals;
+import org.example.scenes.GameScherm;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collided, Newtonian, SceneBorderTouchingWatcher {
+    static Timer timer = new Timer();
+    private DonkeyKong donkeyKong;
+    private GameScherm gameScherm;
     private double playerSpeed = 1;
     private boolean onGround = false;
     private double jumpStrength = 4;
@@ -38,8 +43,10 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     private HealthText healthText;
     private ScoreText scoreText;
 
-    public SuperMax(Coordinate2D initialLocation, HealthText healthText, ScoreText scoreText) {
-        super("sprites/SuperMax.png", initialLocation, new Size(40, 40), 3, 2);
+    public SuperMax(Coordinate2D initialLocation, HealthText healthText, ScoreText scoreText, DonkeyKong donkeyKong, GameScherm gameScherm) {
+        super("sprites/SuperMax.png", initialLocation, new Size(40, 40), 4, 2);
+        this.donkeyKong = donkeyKong;
+        this.gameScherm = gameScherm;
         this.healthText = healthText;
         this.scoreText = scoreText;
 
@@ -55,11 +62,11 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         climbing = false;
 
         if (canClimb) {
-            if (pressedKeys.contains(KeyCode.DOWN)) {
+            if (pressedKeys.contains(KeyCode.DOWN) && !Globals.hammerState) {
                 climbing = true;
                 movingVertically = true;
                 setMotion(playerSpeed, 360d);
-            } else if (pressedKeys.contains(KeyCode.UP)) {
+            } else if (pressedKeys.contains(KeyCode.UP) && !Globals.hammerState) {
                 climbing = true;
                 movingVertically = true;
                 setMotion(playerSpeed, 180d);
@@ -72,19 +79,27 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                 horizontalMotion = -playerSpeed;
                 if (onGround) {
                     setMotion(playerSpeed, 270d);
-                    setAutoCycle(interval, 1);
+                    if (Globals.hammerState) {
+                        setAutoCycle(interval, 3);
+                    } else {
+                        setAutoCycle(interval, 1);
+                    }
                 }
             } else if (pressedKeys.contains(KeyCode.RIGHT)) {
                 movingHorizontally = true;
                 horizontalMotion = playerSpeed;
                 if (onGround) {
                     setMotion(playerSpeed, 90d);
-                    setAutoCycle(interval, 0);
+                    if (Globals.hammerState) {
+                        setAutoCycle(interval, 2);
+                    } else {
+                        setAutoCycle(interval, 0);
+                    }
                 }
             }
         }
 
-        if (pressedKeys.contains(KeyCode.SPACE) && onGround) {
+        if (pressedKeys.contains(KeyCode.SPACE) && onGround && !Globals.hammerState) {
             if (movingHorizontally) {
                 setMotion(jumpStrength, horizontalMotion > 0 ? 160d : 200d);
             } else {
@@ -107,16 +122,24 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         boolean touchingGround = false;
 
         for (Collider collider : colliders) {
+
             if (collider instanceof Balken) {
                 touchingGround = true;
                 alignWithPlatform((Balken) collider);
             }
+
+            if (collider instanceof Hamers) {
+                Hamers.hammerPickup(gameScherm);
+                ((Hamers) collider).remove();
+                Hamers.endingPowerUp(gameScherm);
+            }
+
             if (collider instanceof InteractieveLadders) {
                 canClimb = true;
                 touchingLadder = true;
             }
 
-            if (collider instanceof BruineTonnen || collider instanceof BlauweTonnen || collider instanceof DK) {
+            if (collider instanceof DK) {
                 health--;
                 healthText.setHealthText(health);
 
@@ -125,14 +148,32 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                 );
             }
 
+            if (collider instanceof Tonnen) {
+                if (Globals.hammerState) {
+                    score = score + 300;
+                    Globals.SCORE = score;
+                    scoreText.setScoreText(score);
+                    ((Tonnen) collider).remove();
+                } else {
+                    health--;
+                    healthText.setHealthText(health);
+
+                    setAnchorLocation(
+                            new Coordinate2D(25, 450)
+                    );
+                }
+            }
+
             if (collider instanceof CircleHitbox circleHitbox) {
                 switch (circleHitbox.getId()) {
                     case "Bruine-Tonnen":
                         score = score + 100;
+                        Globals.SCORE = score;
                         scoreText.setScoreText(score);
                         break;
                     case "Blauwe-Tonnen":
                         score = score + 200;
+                        Globals.SCORE = score;
                         scoreText.setScoreText(score);
                         break;
                 }
@@ -144,6 +185,10 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         }
 
         onGround = touchingGround;
+
+        if (health == 0) {
+            donkeyKong.setActiveScene(2);
+        }
     }
 
     private void alignWithPlatform(Balken balken) {

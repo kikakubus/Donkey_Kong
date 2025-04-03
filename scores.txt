@@ -1,0 +1,4 @@
+first - 200
+hoolas - 200
+jvm - 200
+twa - 300

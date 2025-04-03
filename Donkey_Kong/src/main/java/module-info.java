@@ -7,6 +7,7 @@ module Donkey.Kong {
     exports org.example.scenes;
     exports org.example.entities.level;
     exports org.example.entities.level.ladders;
+    exports org.example.entities.powerups;
 
     opens Backgrounds;
     opens Sound;
