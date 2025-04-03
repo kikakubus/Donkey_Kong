@@ -10,19 +10,16 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
-import org.example.Hitbox.CircleHitbox;
+import org.example.Hitbox.TonnenHitbox;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
-import org.example.entities.level.ladders.Ladders;
 import org.example.entities.obstakels.aap.DK;
 import org.example.entities.obstakels.tonnen.BlauweTonnen;
 import org.example.entities.obstakels.tonnen.BruineTonnen;
-import org.example.entities.obstakels.tonnen.Tonnen;
 import org.example.entities.tekst.HealthText;
 import org.example.entities.tekst.ScoreText;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collided, Newtonian, SceneBorderTouchingWatcher {
@@ -34,7 +31,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     private int health = 3;
     private int score = 0;
     private boolean canClimb = false;
-    private boolean climbing = false;
+    private boolean isclimbingTheLadder = false;
     private HealthText healthText;
     private ScoreText scoreText;
 
@@ -52,21 +49,21 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
         boolean movingHorizontally = false;
         boolean movingVertically = false;
-        climbing = false;
+        isclimbingTheLadder = false;
 
         if (canClimb) {
             if (pressedKeys.contains(KeyCode.DOWN)) {
-                climbing = true;
+                isclimbingTheLadder = true;
                 movingVertically = true;
                 setMotion(playerSpeed, 360d);
             } else if (pressedKeys.contains(KeyCode.UP)) {
-                climbing = true;
+                isclimbingTheLadder = true;
                 movingVertically = true;
                 setMotion(playerSpeed, 180d);
             }
         }
 
-        if (!climbing) {
+        if (!isclimbingTheLadder) {
             if (pressedKeys.contains(KeyCode.LEFT)) {
                 movingHorizontally = true;
                 horizontalMotion = -playerSpeed;
@@ -93,7 +90,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
             onGround = false;
         }
 
-        if (!movingHorizontally && !movingVertically && onGround && !climbing) {
+        if (!movingHorizontally && !movingVertically && onGround && !isclimbingTheLadder) {
             setSpeed(0);
         }
 
@@ -125,7 +122,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                 );
             }
 
-            if (collider instanceof CircleHitbox circleHitbox) {
+            if (collider instanceof TonnenHitbox circleHitbox) {
                 switch (circleHitbox.getId()) {
                     case "Bruine-Tonnen":
                         score = score + 100;
@@ -140,14 +137,14 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         }
 
         if (!touchingLadder) {
-            climbing = false;
+            isclimbingTheLadder = false;
         }
 
         onGround = touchingGround;
     }
 
     private void alignWithPlatform(Balken balken) {
-        if (!climbing) {
+        if (!isclimbingTheLadder) {
             setAnchorLocationY(balken.getBoundingBox().getMinY() - getHeight());
         }
     }
