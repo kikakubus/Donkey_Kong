@@ -39,13 +39,13 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     private ScoreText scoreText;
 
     public SuperMax(Coordinate2D initialLocation, HealthText healthText, ScoreText scoreText) {
-        super("sprites/SuperMax.png", initialLocation, new Size(100, 50), 3, 2);
+        super("sprites/SuperMax.png", initialLocation, new Size(40, 40), 3, 2);
         this.healthText = healthText;
         this.scoreText = scoreText;
 
         healthText.setHealthText(health);
         scoreText.setScoreText(score);
-        setGravityConstant(0.10);
+        setGravityConstant(0.07);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                 healthText.setHealthText(health);
 
                 setAnchorLocation(
-                        new Coordinate2D(25, 400)
+                        new Coordinate2D(25, 450)
                 );
             }
 

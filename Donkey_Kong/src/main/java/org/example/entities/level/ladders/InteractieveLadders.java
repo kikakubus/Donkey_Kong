@@ -7,6 +7,6 @@ import com.github.hanyaeger.api.entities.Collider;
 public class InteractieveLadders extends Ladders  implements Collider {
 
     public InteractieveLadders(Coordinate2D initialLocation, Size size, String resource) {
-        super(initialLocation, new Size(70, 50), resource);
+        super(initialLocation, new Size(30, 30), resource);
     }
 }

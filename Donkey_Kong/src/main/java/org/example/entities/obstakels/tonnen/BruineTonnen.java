@@ -14,16 +14,19 @@ public class BruineTonnen extends Tonnen {
 
     @Override
     public void setupEntities() {
-        var bruineTonnenSprite = new BruineTonnenSprite(
-                new Coordinate2D(0, 0)
-        );
 
         Hitbox circleHitbox = new CircleHitbox(
                 new Coordinate2D(0, 0)
         );
 
-        addEntity(bruineTonnenSprite);
+        var bruineTonnenSprite = new BruineTonnenSprite(
+                new Coordinate2D(0, 0)
+        );
+
+
         addEntity(circleHitbox);
+        addEntity(bruineTonnenSprite);
+
     }
 
     @Override

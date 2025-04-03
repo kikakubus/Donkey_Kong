@@ -27,13 +27,13 @@ public abstract class Tonnen extends DynamicCompositeEntity implements Collided,
             if (colliderObject instanceof RectangleHitbox rectangleHitbox) {
                 switch (rectangleHitbox.getId()) {
                     case "TopFloor-LeftSide", "FirstFloor-RightSide":
-                        setMotion(1, 360d);
+                        setMotion(0.7, 360d);
                         break;
                     case "FirstFloor-LeftSide":
-                        setMotion(1, 90d);
+                        setMotion(0.7, 90d);
                         break;
                     case "BottomFloor-RightSide":
-                        setMotion(1, 270d);
+                        setMotion(0.7, 270d);
                         break;
                     default:
                         System.out.println("Unknown hitbox: " + rectangleHitbox.getId());
