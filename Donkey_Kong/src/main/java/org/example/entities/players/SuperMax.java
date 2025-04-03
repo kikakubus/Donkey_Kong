@@ -125,9 +125,17 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                 );
             }
 
-            if (collider instanceof CircleHitbox) {
-                score = score + 100;
-                scoreText.setScoreText(score);
+            if (collider instanceof CircleHitbox circleHitbox) {
+                switch (circleHitbox.getId()) {
+                    case "Bruine-Tonnen":
+                        score = score + 100;
+                        scoreText.setScoreText(score);
+                        break;
+                    case "Blauwe-Tonnen":
+                        score = score + 200;
+                        scoreText.setScoreText(score);
+                        break;
+                }
             }
         }
 

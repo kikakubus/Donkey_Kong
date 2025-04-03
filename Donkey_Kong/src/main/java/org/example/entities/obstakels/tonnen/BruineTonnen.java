@@ -16,7 +16,7 @@ public class BruineTonnen extends Tonnen {
     public void setupEntities() {
 
         Hitbox circleHitbox = new CircleHitbox(
-                new Coordinate2D(0, 0)
+                "Bruine-Tonnen", new Coordinate2D(0, 0)
         );
 
         var bruineTonnenSprite = new BruineTonnenSprite(
