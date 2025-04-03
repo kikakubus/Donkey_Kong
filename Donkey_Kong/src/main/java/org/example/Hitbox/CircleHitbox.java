@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
 
 public class CircleHitbox extends Hitbox {
 
-    public CircleHitbox(Coordinate2D initialLocation) {
-        super(initialLocation);
+    public CircleHitbox(String id, Coordinate2D initialLocation) {
+        super(initialLocation, id);
         setWidth(30);
         setAnchorLocationX(5);
         setHeight(20);
