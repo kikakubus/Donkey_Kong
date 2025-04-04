@@ -9,9 +9,9 @@ import org.example.Hitbox.BrokenLadderHitbox;
 import java.util.List;
 
 public abstract class Tonnen extends DynamicCompositeEntity implements Collided, Collider, SceneBorderCrossingWatcher {
-    private int speed;
+    private double speed;
 
-    public Tonnen(Coordinate2D initialLocation, int speed) {
+    public Tonnen(Coordinate2D initialLocation, double speed) {
         super(initialLocation);
         this.speed = speed;
     }

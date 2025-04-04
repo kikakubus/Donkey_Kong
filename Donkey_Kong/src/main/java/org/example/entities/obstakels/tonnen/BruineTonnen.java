@@ -5,7 +5,7 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 
 public class BruineTonnen extends Tonnen {
 
-    public BruineTonnen(Coordinate2D initialLocation, int speed) {
+    public BruineTonnen(Coordinate2D initialLocation, double speed) {
         super(initialLocation, speed);
         setMotion(speed, 270d);
     }

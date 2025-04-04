@@ -14,6 +14,7 @@ import org.example.DonkeyKong;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.obstakels.aap.DK;
+import org.example.entities.obstakels.tonnen.BlauweTonnen;
 import org.example.entities.obstakels.tonnen.Tonnen;
 import org.example.entities.obstakels.vlammetjes.Vlammetjes;
 import org.example.entities.powerups.Hamers;
@@ -147,7 +148,12 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
 
             if (collider instanceof Tonnen) {
                 if (Globals.hammerState) {
-                    score = score + 300;
+                    if (collider instanceof BlauweTonnen) {
+                        score = score + 600;
+                    } else {
+                        score = score + 300;
+                    }
+
                     Globals.SCORE = score;
                     scoreText.setScoreText(score);
                     ((Tonnen) collider).remove();
