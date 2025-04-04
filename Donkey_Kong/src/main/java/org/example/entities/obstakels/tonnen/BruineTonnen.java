@@ -2,8 +2,6 @@ package org.example.entities.obstakels.tonnen;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.scenes.SceneBorder;
-import org.example.Hitbox.TonnenHitbox;
-import org.example.Hitbox.Hitbox;
 
 public class BruineTonnen extends Tonnen {
 
@@ -14,16 +12,10 @@ public class BruineTonnen extends Tonnen {
 
     @Override
     public void setupEntities() {
-        Hitbox circleHitbox = new TonnenHitbox(
-                "Bruine-Tonnen", new Coordinate2D(0, 0)
-        );
-
         var bruineTonnenSprite = new BruineTonnenSprite(
                 new Coordinate2D(0, 0)
         );
 
-
-        addEntity(circleHitbox);
         addEntity(bruineTonnenSprite);
 
     }

@@ -11,7 +11,6 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
 import org.example.DonkeyKong;
-import org.example.Hitbox.TonnenHitbox;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.obstakels.aap.DK;
@@ -175,21 +174,6 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
                     setAnchorLocation(
                             new Coordinate2D(25, 450)
                     );
-                }
-            }
-
-            if (collider instanceof TonnenHitbox circleHitbox) {
-                switch (circleHitbox.getId()) {
-                    case "Bruine-Tonnen":
-                        score = score + 100;
-                        Globals.SCORE = score;
-                        scoreText.setScoreText(score);
-                        break;
-                    case "Blauwe-Tonnen":
-                        score = score + 200;
-                        Globals.SCORE = score;
-                        scoreText.setScoreText(score);
-                        break;
                 }
             }
         }

@@ -2,7 +2,6 @@ package org.example.scenes;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.EntitySpawnerContainer;
-import com.github.hanyaeger.api.Size;
 import com.github.hanyaeger.api.scenes.DynamicScene;
 import com.github.hanyaeger.api.scenes.TileMapContainer;
 import javafx.scene.paint.Color;
@@ -12,6 +11,7 @@ import org.example.Hitbox.BrokenLadderHitbox;
 import org.example.entities.obstakels.aap.DK;
 import org.example.entities.obstakels.vlammetjes.BlauweVlammetjes;
 import org.example.entities.obstakels.vlammetjes.RodeVlammetjes;
+import org.example.entities.obstakels.vlammetjes.Vlammetjes;
 import org.example.entities.players.SuperMax;
 import org.example.entities.spawners.TonnenSpawner;
 import org.example.entities.tekst.HealthText;
@@ -55,11 +55,11 @@ public class GameScherm extends DynamicScene implements TileMapContainer, Entity
                 this
         );
 
-        var rodeVlam = new RodeVlammetjes(
+        Vlammetjes rodeVlam = new RodeVlammetjes(
                 new Coordinate2D(getWidth() / 2, 445)
         );
 
-        var blauweVlam = new BlauweVlammetjes(
+        Vlammetjes blauweVlam = new BlauweVlammetjes(
                 new Coordinate2D(getWidth() / 2, 287)
         );
 

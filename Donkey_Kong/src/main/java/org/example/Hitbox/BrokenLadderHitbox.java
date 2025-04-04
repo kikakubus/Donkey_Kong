@@ -9,6 +9,6 @@ public class BrokenLadderHitbox extends Hitbox {
         super(initialLocation, id);
         setWidth(27);
         setHeight(60);
-        setFill(Color.RED);
+        setFill(Color.TRANSPARENT);
     }
 }
