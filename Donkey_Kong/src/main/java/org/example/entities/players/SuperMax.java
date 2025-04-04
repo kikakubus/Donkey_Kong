@@ -37,7 +37,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     private int health = 3;
     private int score = 0;
     private boolean canClimb = false;
-    private boolean climbing = false;
+    private boolean isclimbingTheLadder = false;
     private HealthText healthText;
     private ScoreText scoreText;
 
@@ -57,21 +57,21 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
         boolean movingHorizontally = false;
         boolean movingVertically = false;
-        climbing = false;
+        isclimbingTheLadder = false;
 
         if (canClimb) {
             if (pressedKeys.contains(KeyCode.DOWN) && !Globals.hammerState) {
-                climbing = true;
+                isclimbingTheLadder = true;
                 movingVertically = true;
                 setMotion(playerSpeed, 360d);
             } else if (pressedKeys.contains(KeyCode.UP) && !Globals.hammerState) {
-                climbing = true;
+                isclimbingTheLadder = true;
                 movingVertically = true;
                 setMotion(playerSpeed, 180d);
             }
         }
 
-        if (!climbing) {
+        if (!isclimbingTheLadder) {
             if (pressedKeys.contains(KeyCode.LEFT)) {
                 movingHorizontally = true;
                 horizontalMotion = -playerSpeed;
@@ -106,7 +106,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
             onGround = false;
         }
 
-        if (!movingHorizontally && !movingVertically && onGround && !climbing) {
+        if (!movingHorizontally && !movingVertically && onGround && !isclimbingTheLadder) {
             setSpeed(0);
         }
 
@@ -185,7 +185,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
         }
 
         if (!touchingLadder) {
-            climbing = false;
+            isclimbingTheLadder = false;
         }
 
         onGround = touchingGround;
@@ -196,7 +196,7 @@ public class SuperMax extends DynamicSpriteEntity implements KeyListener, Collid
     }
 
     private void alignWithPlatform(Balken balken) {
-        if (!climbing) {
+        if (!isclimbingTheLadder) {
             setAnchorLocationY(balken.getBoundingBox().getMinY() - getHeight());
         }
     }

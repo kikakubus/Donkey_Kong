@@ -6,8 +6,8 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 
 public class BlauweTonnenSprite extends DynamicSpriteEntity {
 
-    public BlauweTonnenSprite(final Coordinate2D initialLocation) {
-        super("sprites/BlueBarrel.png", initialLocation, new Size(40, 40), 2, 2);
+    public BlauweTonnenSprite(final Coordinate2D INITIAL_LOCATION) {
+        super("sprites/BlueBarrel.png", INITIAL_LOCATION, new Size(40, 40), 2, 2);
         setAutoCycle(450, 0);
     }
 }

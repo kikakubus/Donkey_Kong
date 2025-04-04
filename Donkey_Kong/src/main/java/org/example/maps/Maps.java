@@ -4,7 +4,6 @@ import com.github.hanyaeger.api.scenes.TileMap;
 import org.example.entities.level.Balken;
 import org.example.entities.level.ladders.InteractieveLadders;
 import org.example.entities.level.ladders.NietInteractieveLadders;
-import org.example.entities.obstakels.vlammetjes.RodeVlammetjes;
 import org.example.entities.powerups.Hamers;
 
 public class Maps extends TileMap {
